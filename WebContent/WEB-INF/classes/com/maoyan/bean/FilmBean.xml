@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="FilmBeanNS">
+	
+	<resultMap type="FilmBean" id="FilmBeanRS">
+		<id property="id" column="f_id"/>
+		<result property="name" column="f_name"/>
+		<result property="enname" column="f_name_en"/>
+		<result property="hot" column="f_hot"/>
+		<result property="soon" column="f_soon"/>
+		<result property="wantWatch" column="f_want_watch"/>
+		<result property="showTime" column="f_show_time"/>
+		<result property="userGrade" column="f_grade_user"/>
+		<result property="boxOffice" column="f_box_office"/>
+		<result property="indexImage" column="f_index_image"/>
+	</resultMap>
+	
+	<!-- <insert id="addUser" >
+		insert into t_user(u_id,u_username,u_pwd,u_born) values(seq_id.nextval,#{username},#{pwd},#{born,jdbcType=DATE})
+	</insert>
+	<update id="updateUser">
+		update t_use 
+		<set>
+			<if test="username!=null">u_username=#{username},</if>
+			<if test="pwd!=null">u_pwd=#{pwd}</if>
+		</set>
+		where u_id=#{id}
+	</update>
+	<delete id="deleteUser">
+		begin
+			execute immediate 'delete from t_user';
+			execute immediate 'delete from t_address';
+		end;
+	</delete> -->
+	<select id="selectAllFilm" resultMap="FilmBeanRS">
+		select * from t_film 
+	</select>
+	<select id="selectFilmByCondition" resultMap="FilmBeanRS" >
+		select * from t_film 
+		<where>
+			<if test="hot == 1">
+				f_hot=1
+			</if>
+			<if test="soon == 1">
+				and f_soon=1
+			</if>
+		</where>
+	</select>
+	<select id="selectFilmWithSort" resultMap="FilmBeanRS" >
+		select * from t_film 
+		<where>
+			<if test="playCount > 0">
+				f_play_count > 0 order by f_play_count desc
+			</if>
+			<if test="boxOffice == 1">
+				f_box_office > 0 order by f_box_office desc
+			</if>
+			<if test="wantWatch == 1">
+				f_want_watch > 0 order by f_want_watch desc
+			</if>
+			<if test="userGrade == 1">
+				f_grade_user > 0 order by f_grade_user desc
+			</if>
+		</where>
+	</select>
+	<!-- <select id="selectUserById" resultMap="UserBeanRS">
+		select * from t_user where u_id=#{id}
+	</select>
+	
+	<select id="selectUserByNames" resultMap="UserBeanRS" >
+		select * from t_user where u_username in 
+		<foreach collection="list" item="element" index="i" open="(" close=")" separator=",">
+			#{element}
+		</foreach>
+		
+	</select> -->
+</mapper>

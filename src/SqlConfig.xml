@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 给pojo对象取别名 -->
+	<typeAliases>
+		<typeAlias type="com.maoyan.bean.FilmBean" alias="FilmBean" />
+		<typeAlias type="com.maoyan.bean.UserBean" alias="UserBean" />
+	</typeAliases>
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="com.mysql.jdbc.Driver" />
+				<property name="url" value="jdbc:mysql://maoyan-db:3306/films" />
+				<property name="username" value="root" />
+				<property name="password" value="maoyan" />
+			</dataSource>
+		</environment>
+	</environments>
+	<!-- 指定映射文件的路径 -->
+	<mappers>
+		<mapper resource="com/maoyan/bean/FilmBean.xml" />
+		<mapper resource="com/maoyan/bean/UserBean.xml" />
+	</mappers>
+</configuration>
